@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+@font-face {
+  font-family: 'HemiCube';
+  src: url('./fonts/HemicubeLogoPersonalUseOnly-z8jw4.ttf');
+}
+
+.hemi-cube{
+  font-family: 'HemiCube', 'sans-serif';
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card-img-hover:hover img{
+  transform: scale(1.2); 
+}
+
+
+.card-img-hover img{
+  transition: all 0.5s ease-in-out;
+}
