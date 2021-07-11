@@ -1,18 +1,37 @@
 import { Avatar } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { posts } from '../api/posts';
 import { TiEdit } from 'react-icons/ti';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
+
 
 const ProfilePage = () => {
 
+  const dispatch = useDispatch()
 
-  const[name, setName] = useState('Sanjeev Sharma');
-  const[email, setEmail] = useState('sanjeev.sharma@acem.edu.in');
-  const[mobileNumber, setMobileNumber] = useState('5545487457');
-  const[gender, setGender] = useState('Male');
-  const[location, setLocation] = useState('Delhi');
+  const userDetails = useSelector((state) => state.userDetails)
+  const { loading, error, user } = userDetails
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+  const { follower, following } = userInfo
+  
+  const userFollowing = useSelector(state => state.userFollow)
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const { success } = userUpdateProfile
+
+
+  const[followerLength, setFollowerLength] = useState(0)
+  const [followingLength, setFollowingLength] = useState(0)
+  const[name, setName] = useState('');
+  const[email, setEmail] = useState('');
+  const[mobileNumber, setMobileNumber] = useState('');
+  const[gender, setGender] = useState('');
+  const[location, setLocation] = useState('');
 
   const textPost = posts.filter(post => post.type === 'text')
   const videoPost = posts.filter(post => post.type === 'video')
@@ -41,34 +60,34 @@ const ProfilePage = () => {
     <form onSubmit={handleSubmit} className='pl-6 p-4 border w-full mx-auto md:px-12 mt-12 border-t-4 border-yellow-400 pt-4'>
       <h1 className='font-bold text-gray-800 text-xl md:text-4xl mb-4'>Editing Profile Info</h1>
       <div className='mt-4 flex flex-col items-start gap-4'>
-        <div  className='flex items-center gap-10 flex-wrap'>
+        <div  className='flex items-center justify-between gap-11 w-full flex-wrap'>
           <label className='font-bold text-gray-600 text-md md:text-xl' htmlFor="name">Name:</label>
           <input required type="text"  value={name} onChange={e => setName(e.target.value)} className='
-          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-purple-600 focus:ring-opacity-50
+          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-purple-600 focus:ring-opacity-50 flex-1
           '/>
         </div>
-        <div  className='flex items-center gap-11 flex-wrap'>
+        <div  className='flex items-center justify-evenly w-full gap-12 flex-wrap'>
           <label className='font-bold text-gray-600 text-md md:text-xl' htmlFor="email">Email:</label>
           <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className='
-          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 flex-1 
           '/>
         </div>
-        <div  className='flex items-center gap-9 flex-wrap'>
+        <div  className='flex items-center justify-between w-full gap-10 flex-wrap'>
           <label className='font-bold text-gray-600 text-md  md:text-xl' htmlFor="mobile">Mobile:</label>
           <input required type="text" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)}className='
-          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 flex-1 
           '/>
         </div>
-        <div  className='flex items-center gap-7 flex-wrap'>
+        <div  className='flex items-center justify-between w-full gap-8 flex-wrap'>
           <label className='font-bold text-gray-600 text-md md:text-xl' htmlFor="gender">Gender:</label>
           <input required type="text" value={gender} onChange={e => setGender(e.target.value)} className='
-          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 flex-1 
           '/>
         </div>
-        <div  className='flex items-center gap-4 flex-wrap'>
+        <div  className='flex items-center justify-between w-full gap-5 flex-wrap'>
           <label className='font-bold text-gray-600 text-md md:text-xl' htmlFor="location">Location:</label>
           <input required type="text" value={location} onChange={e => setLocation(e.target.value)} className='
-          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 flex-1 
           '/>
         </div>
         <button className='px-4 py-1 rounded-md bg-yellow-400 font-bold'
@@ -104,6 +123,11 @@ const ProfilePage = () => {
         <button className='px-4 py-1 rounded-md bg-yellow-400 font-bold' 
         onClick={handleEdit}>Edit</button>
       </form>
+          <div className='flex gap-4 items-center
+                justify-center'>
+                <p>Follower: {followerLength}</p>
+                <p>Following: {followingLength}</p>
+          </div>
     </div>
 
     const TextPost = 
@@ -114,7 +138,7 @@ const ProfilePage = () => {
           textPost && textPost.map(post => {
             return (
              <NavLink to={`/post/${post.title.toLowerCase().replaceAll(' ','-')}/${post.id}`} key={post.id}>
-                <div className='flex flex-wrap md:flex-nowrap justify-between mt-6 '>
+                <div className='flex flex-wrap items-center md:flex-nowrap justify-between mt-6 '>
                 <div className='w-40 md:w-60 h-24 md:h-32'>
                   <img className='rounded-md h-full w-full' src={post.src} alt={post.title} />
                 </div>
@@ -124,11 +148,11 @@ const ProfilePage = () => {
                 </div>
                 <div className='flex md:flex-col gap-4 items-center
                 justify-center'>
-                  <NavLink to={`/edit/:id`}  className='px-2 py-2 rounded-md text-white bg-blue-600  hover:bg-blue-400  font-bold'>
-                    <TiEdit />
+                  <NavLink to={`/edit/:id`}  className='px-2 py-2 rounded-md text-white bg-blue-600  hover:bg-blue-400 font-bold flex gap-2 items-center'>
+                    <TiEdit /> Edit
                   </NavLink>
-                  <NavLink to={`/delete/:id`}  className='px-2 py-2 text-white bg-red-600 hover:bg-red-400 rounded-md   font-bold'>
-                    <RiDeleteBin6Fill />
+                  <NavLink to={`/delete/:id`}  className='px-2 py-2 text-white bg-red-600 hover:bg-red-400 rounded-md font-bold flex gap-2 items-center'>
+                    <RiDeleteBin6Fill /> Delete
                   </NavLink>
                 </div>
               </div>
@@ -143,8 +167,8 @@ const ProfilePage = () => {
           videoPost && videoPost.map(video => {
             return (
              <NavLink to={`/video/${video.title.toLowerCase().replaceAll(' ','-')}/${video.id}`} key={video.id}>
-                <div className='flex flex-wrap md:flex-nowrap justify-between mt-6'>
-                <div className='w-40 md:w-60 h-24 md:h-32'>
+                <div className='flex flex-wrap items-center md:flex-nowrap justify-between mt-6'>
+                <div className='w-40 md:w-60 h-24 md:h-32 text-xs'>
                   <img className='rounded-md h-full w-full' src={video.thumbnail} alt={video.title} />
                 </div>
                 <div className='flex flex-col gap-2 pt-4 pb-4 md:p-4'>
@@ -153,11 +177,11 @@ const ProfilePage = () => {
                 </div>
                 <div className='flex md:flex-col gap-4 items-center
                 justify-center'>
-                  <NavLink to={`/edit/:id`}  className='px-2 py-2 rounded-md text-white bg-blue-600  hover:bg-blue-400 font-bold'>
-                    <TiEdit />
+                  <NavLink to={`/edit/:id`}  className='px-2 py-2 rounded-md text-white bg-blue-600  hover:bg-blue-400 font-bold flex gap-2 items-center'>
+                    <TiEdit /> Edit
                   </NavLink>
-                  <NavLink to={`/delete/:id`}  className='px-2 py-2 rounded-md text-white bg-red-600 hover:bg-red-400 font-bold'>
-                    <RiDeleteBin6Fill />
+                  <NavLink to={`/delete/:id`}  className='px-2 py-2 rounded-md text-white bg-red-600 hover:bg-red-400 font-bold flex gap-2 items-center'>
+                    <RiDeleteBin6Fill /> Delete
                   </NavLink>
                 </div>
               </div>
@@ -167,6 +191,12 @@ const ProfilePage = () => {
         }
       </div>
     </div>
+
+        useEffect(() => {
+          setFollowerLength(follower.length)
+          setFollowingLength(following.length)
+          console.log(userFollowing)
+        }, [userFollowing, follower, following])
 
   return (
     <div className='md:grid grid-cols-5 p-4 bg-gray-100'>

@@ -10,6 +10,10 @@ import {
   userListReducer,
   userDeleteReducer,
   userUpdateReducer,
+  userFollowReducer,
+  userFollowerListReducer,
+  userUnFollowReducer,
+  userFollowingListReducer
 } from './reducers/userReducers';
 
 
@@ -22,13 +26,16 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  userFollow: userFollowReducer,
+  userFollower: userFollowerListReducer,
+  userFollowing: userFollowingListReducer,
+  userUnFollow: userUnFollowReducer,
 })
 
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
-
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },

@@ -7,6 +7,7 @@ export const posts = [
     "category": "Entertainment",
     "src":"https://image.scoopwhoop.com/w620/s3.scoopwhoop.com/anj2/59843420fb77853e76e3f351/4312544c-ab21-4480-9ed7-b8e9669ed730.jpg.webp",
     "author": {
+      "id":"60eac41fab72874a484946e4",
       "name": "Saurav Bhanot"
     },
     "postedOn": new Date().toUTCString(),
@@ -15,10 +16,15 @@ export const posts = [
     "id": "2",
     "type": "text",
     "title": "Ways To Deal With The Empty Feeling Called 'Languishing', While Stuck At Home",
-    "description": "The Covid-19 pandemic has been going on for the better part of two years now and we have been stuck inside our homes for way too long. Sitting and stewing behind locked doors has led to a lot of us forming new habits, new ways of thinking, and new ways of perceiving things around us. \n One of the most common things that has happened during the lockdown is that many of us now feel a little ‘blah’ in our daily lives. And this feeling has a name. When the lockdown started, even though we were not all at the top of our game, a lot of us started new projects, welcomed the time-out to explore passions and hobbies, and saw the quarantine as an opportunity to become better. ",
+    "description": "The Covid-19 pandemic has been going on for the better part of two years now and we have been stuck inside our homes for way too long. \n Sitting and stewing behind locked doors has led to a lot of us forming new habits, new ways of thinking, and new ways of perceiving things around us. \n One of the most common things that has happened during the lockdown is that many of us now feel a little ‘blah’ in our daily lives. \n And this feeling has a name. When the lockdown started, even though we were not all at the top of our game, a lot of us started new projects, welcomed the time-out to explore passions and hobbies, and saw the quarantine as an opportunity to become better. ",
     "category": "Covid19",
-    "src": "https://im.idiva.com/content/2021/Jun/lead---2021-06-16T160758159_60c9d3e7140a9.jpg?w=913&h=425&cc=1",
+    "src": [
+      "https://im.idiva.com/content/2021/Jun/lead---2021-06-16T160758159_60c9d3e7140a9.jpg?w=913&h=425&cc=1",
+      "https://im.idiva.com/content/2021/Jul/lead---2021-07-06T180111461_60e44f56eec79.jpg?w=913&h=425&cc=1",
+      "https://im.idiva.com/photogallery/2021/Jul/THUMB---2021-07-06T101429934_60e3e1f4152c4.jpg"
+    ],
     "author": {
+      "id":"60eac435ab72874a484946e7",
       "name": "Prerna Prakash"
     },
     "postedOn": new Date().toUTCString(),
@@ -31,6 +37,7 @@ export const posts = [
     "category": "Health",
     "src": "https://im.idiva.com/content/2021/Jul/lead---2021-07-06T180111461_60e44f56eec79.jpg?w=913&h=425&cc=1",
     "author": {
+      "id":"60eac444ab72874a484946ea",
       "name": "Priyanka"
     },
     "postedOn": new Date().toUTCString(),
@@ -43,6 +50,7 @@ export const posts = [
     "category": "Fashion",
     "src": "https://im.idiva.com/photogallery/2021/Jul/THUMB---2021-07-06T101429934_60e3e1f4152c4.jpg",
     "author": {
+      "id":"60eac49aad674e5128a667fc",
       "name": "Rheeaa Cheema"
     },
     "postedOn": new Date().toUTCString(),
@@ -55,6 +63,7 @@ export const posts = [
     "category": "Video",
     "src": "https://www.youtube.com/watch?v=IBKUI99KSa0",
     "author": {
+      "id":"54562",
       "name": "DYANAMO GAMING"
     },
     "postedOn": new Date().toUTCString(),

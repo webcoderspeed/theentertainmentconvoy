@@ -91,13 +91,70 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
     case 'USER_UPDATE_REQUEST':
       return { loading: true }
     case 'USER_UPDATE_SUCCESS':
-      return { loading: false, success: true }
+      return { loading: false, success: true, user: action.payload }
     case 'USER_UPDATE_FAIL':
       return { loading: false, error: action.payload }
     case 'USER_UPDATE_RESET':
       return {
         user: {},
       }
+    default:
+      return state
+  }
+}
+
+export const userFollowReducer = (state = { user: { followings: [] } }, action) => {
+  switch (action.type) {
+    case 'USER_FOLLOW_REQUEST':
+      return { loading: true, user: { followings: [] } }
+    case 'USER_FOLLOW_SUCCESS':
+    return { loading: false, user: { followings: action.payload }}
+    case 'USER_FOLLOW_FAIL': 
+    return { loading: false, error: action.payload }
+    case 'USER_FOLLOW_RESET':
+      return { user: { followings: [] }}
+    default:
+      return state
+  }
+}
+export const userFollowingListReducer = (state = { user: { followings: [] } }, action) => {
+  switch (action.type) {
+    case 'USER_FOLLOWING_LIST_REQUEST':
+      return { loading: true }
+    case 'USER_FOLLOWING_LIST_SUCCESS':
+    return { loading: false, user: { followings: action.payload }}
+    case 'USER_FOLLOWING_LIST_FAIL': 
+    return { loading: false, error: action.payload }
+    case 'USER_FOLLOWING_LIST_RESET':
+      return { user: { followings: [] }}
+    default:
+      return state
+  }
+}
+
+export const userFollowerListReducer = (state = { user: { followers: [] } }, action) => {
+  switch (action.type) {
+    case 'USER_FOLLOWER_LIST_REQUEST':
+      return { loading: true }
+    case 'USER_FOLLOWER_LIST_SUCCESS':
+    return { loading: false, user: { followers: action.payload }}
+    case 'USER_FOLLOWER_LIST_FAIL': 
+    return { loading: false, error: action.payload }
+    case 'USER_FOLLOWER_LIST_RESET':
+      return { user: { followers: [] }}
+    default:
+      return state
+  }
+}
+
+export const userUnFollowReducer = (state = { user: { followings: [] } }, action) => {
+  switch (action.type) {
+    case 'USER_UNFOLLOW_REQUEST':
+      return { loading: true }
+    case 'USER_UNFOLLOW_SUCCESS':
+    return { loading: false, user: { followings: action.payload }}
+    case 'USER_UNFOLLOW_FAIL': 
+    return { loading: false, error: action.payload }
     default:
       return state
   }

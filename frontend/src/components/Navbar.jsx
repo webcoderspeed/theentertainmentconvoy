@@ -2,8 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import { Avatar } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../actions/userActions'
 
-const Navbar = () => {
+const Navbar = ({user}) => {
 
   const nav = document.querySelector('nav');
 
@@ -13,6 +15,15 @@ const Navbar = () => {
   } else {
     nav && nav.classList.remove('shadow-md')
   }
+  }
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const logoutHandler = () => {
+    dispatch(logout())
   }
 
   return (
@@ -36,9 +47,18 @@ const Navbar = () => {
         <NavLink to='/search' className='text-2xl'>
           <BsSearch />
         </NavLink> 
-        <NavLink to='/profile'>
-          <Avatar src='' />
-        </NavLink>
+        {
+          userInfo && userInfo ? (
+            <NavLink to='/profile'>
+              <Avatar src={userInfo.file} onClick={logoutHandler}/>
+              {userInfo.name}
+            </NavLink>
+          ) : (
+            <NavLink to='/login' className='font-bold bg-yellow-400 px-4 py-1 rounded-lg'>
+              Sign In
+            </NavLink>
+          )
+        }
       </span>
     </nav>
   )

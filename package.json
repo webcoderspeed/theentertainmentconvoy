@@ -1,0 +1,45 @@
+{
+  "name": "theentertainmentconvoy",
+  "version": "1.0.0",
+  "description": "A social media platform",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webcoderspeed/theentertainmentconvoy.git"
+  },
+  "keywords": [],
+  "author": "webcoderspeed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webcoderspeed/theentertainmentconvoy/issues"
+  },
+  "homepage": "https://github.com/webcoderspeed/theentertainmentconvoy#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.6",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
