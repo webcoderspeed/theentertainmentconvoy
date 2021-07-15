@@ -137,7 +137,7 @@ export const userFollowerListReducer = (state = { user: { followers: [] } }, act
     case 'USER_FOLLOWER_LIST_REQUEST':
       return { loading: true }
     case 'USER_FOLLOWER_LIST_SUCCESS':
-    return { loading: false, user: { followers: action.payload }}
+    return { loading: false, user: { followers: action.payload.follower }}
     case 'USER_FOLLOWER_LIST_FAIL': 
     return { loading: false, error: action.payload }
     case 'USER_FOLLOWER_LIST_RESET':
@@ -155,6 +155,22 @@ export const userUnFollowReducer = (state = { user: { followings: [] } }, action
     return { loading: false, user: { followings: action.payload }}
     case 'USER_UNFOLLOW_FAIL': 
     return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+
+export const userLoginWithGoogleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'USER_LOGIN_WITH_GOOGLE_REQUEST':
+      return { loading: true }
+    case 'USER_LOGIN_WITH_GOOGLE_SUCCESS':
+      return { loading: false, userInfo: action.payload }
+    case 'USER_LOGIN_WITH_GOOGLE_FAIL':
+      return { loading: false, error: action.payload }
+    case 'USER_LOGOUT_WITH_GOOGLE':
+      return {}
     default:
       return state
   }

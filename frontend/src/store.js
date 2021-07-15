@@ -13,7 +13,8 @@ import {
   userFollowReducer,
   userFollowerListReducer,
   userUnFollowReducer,
-  userFollowingListReducer
+  userFollowingListReducer,
+  userLoginWithGoogleReducer
 } from './reducers/userReducers';
 
 
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   userFollower: userFollowerListReducer,
   userFollowing: userFollowingListReducer,
   userUnFollow: userUnFollowReducer,
+  userloginWithGoogle: userLoginWithGoogleReducer
 })
 
 

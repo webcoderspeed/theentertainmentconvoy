@@ -2,8 +2,6 @@
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js';
-import mongoose from 'mongoose';
-import gravatar from 'gravatar'
 
 // @desc    Auth user & get token
 // @route   POST /users/login
@@ -25,11 +23,7 @@ const authUser = asyncHandler(async (req, res) => {
       gender: user.gender,
       mobileNumber: user.mobileNumber,
       location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      file: user.file
     })
   } else {
     res.status(401)
@@ -66,14 +60,6 @@ const registerUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
       follower: user.follower,
       following: user.following,
-      gender: user.gender,
-      mobileNumber: user.mobileNumber,
-      location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
     })
   } else {
     res.status(400)
@@ -99,11 +85,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       gender: user.gender,
       mobileNumber: user.mobileNumber,
       location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      file: user.file
     })
   } else {
     res.status(404)
@@ -124,6 +106,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.gender = req.body.gender || user.gender
     user.location = req.body.location || user.location
     user.mobileNumber = req.body.mobileNumber || user.mobileNumber
+    user.file = req.body.file || user.file
+
 
     if (req.body.password) {
       user.password = req.body.password
@@ -137,14 +121,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
-      gender: user.gender,
-      mobileNumber: user.mobileNumber,
-      location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      gender: updatedUser.gender,
+      mobileNumber: updatedUser.mobileNumber,
+      location: updatedUser.location,
+      file: updatedUser.file,
     })
   } else {
     res.status(404)
@@ -208,11 +188,7 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      file: updatedUser.file
     })
   } else {
     res.status(404)
@@ -247,11 +223,7 @@ const followUser = asyncHandler(async (req, res) => {
       gender: user.gender,
       mobileNumber: user.mobileNumber,
       location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      file: user.file
       })
     }
 
@@ -299,11 +271,7 @@ const unfollowUser = asyncHandler(async (req, res) => {
       gender: user.gender,
       mobileNumber: user.mobileNumber,
       location: user.location,
-      file: gravatar.url(user.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      })
+      file: user.file
       })
     } 
   } catch (err) {

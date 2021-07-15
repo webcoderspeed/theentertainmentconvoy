@@ -54,8 +54,6 @@ const useStyles = makeStyles((theme) => ({
 const RegisterPage = () => {
    const classes = useStyles();
 
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -80,7 +78,6 @@ const RegisterPage = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      setName(`${firstName} ${lastName}`)
       dispatch(register(name , email, password))
     }
   }
@@ -101,36 +98,22 @@ const RegisterPage = () => {
       {loading && <p>Loading...</p>}
         <form className={classes.form} noValidate onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+              variant="outlined"
                 required
                 fullWidth
                 id="email"

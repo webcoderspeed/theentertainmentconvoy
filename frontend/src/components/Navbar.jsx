@@ -26,6 +26,9 @@ const Navbar = ({user}) => {
     dispatch(logout())
   }
 
+  console.log(userInfo)
+
+
   return (
     <nav className='p-4 md:px-10 flex justify-between items-center flex-wrap sticky top-0 z-50 bg-white shadow-md'>
       <span className='flex gap-5'>

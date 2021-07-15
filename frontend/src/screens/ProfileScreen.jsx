@@ -18,9 +18,10 @@ const ProfileScreen = () => {
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails;
 
-
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin;
+
+  console.log(user)
 
     useEffect(() => {
     if (!userInfo) {
@@ -29,14 +30,16 @@ const ProfileScreen = () => {
       if (!user || !user.name) {
         dispatch(getUserDetails('profile'))
       } else {
-        setName(userInfo.name)
-        setEmail(userInfo.email)
-        setGender(userInfo.gender)
-        setLocation(userInfo.location)
-        setMobileNumber(userInfo.mobileNumber)
+        setName(user.name)
+        setEmail(user.email) 
+        setGender(user.gender) 
+        setLocation(user.location)
+        setMobileNumber(user.mobileNumber) 
       }
     }
   }, [dispatch, history, userInfo, user])
+
+
 
 
   return (
@@ -46,7 +49,7 @@ const ProfileScreen = () => {
         <p className='text-xl font-bold text-xl text-emerald-400'>{ loading && 'Loading...' }</p>
         <p className='text-xl font-bold text-xl text-red-800'>{ error }</p>
         <table>
-          <caption className='px-4 p-1 rounded-md font-bold rounded-b-none text-2xl md:text-4xl mb-6'>User Info</caption>
+        <caption className='px-4 p-1 rounded-md font-bold rounded-b-none text-2xl md:text-4xl mb-6'>User Info</caption>
           <tbody>
             <tr>
             <td className='px-4 py-2 font-bold text-lg md:text-xl '>Name:</td>

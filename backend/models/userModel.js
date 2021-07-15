@@ -11,12 +11,10 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
       unique: true,
     },
     password: {
       type: String,
-      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -38,6 +36,7 @@ const userSchema = mongoose.Schema(
     },
     follower: [{ type: ObjectId, ref: 'User' }],
     following: [{ type: ObjectId, ref: 'User'}],
+    googleId: String,
   },
   {
     timestamps: true,

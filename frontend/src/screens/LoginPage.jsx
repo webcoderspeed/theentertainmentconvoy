@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/userActions';
+import { login, loginWithGoogle } from '../actions/userActions';
 
 function Copyright() {
   return (
@@ -66,12 +66,20 @@ const LoginPage = () => {
     if (userInfo) {
       history.push('/')
     }
+
   }, [history, userInfo])
 
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(login(email, password))
   }
+
+    const googleLogin = (e) => {
+    e.preventDefault();
+    window.open("http://localhost:5000/auth/google", "_self");
+    dispatch(loginWithGoogle())
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -125,6 +133,7 @@ const LoginPage = () => {
           >
             Sign In
           </Button>
+           <button className='px-4 py-1 bg-yellow-400 font-bold text-center w-full ' onClick={googleLogin}>LOGIN WITH GOOGLE</button>
           <Grid container>
             <Grid item xs>
               <Link to="/forgotpassword" variant="body2">

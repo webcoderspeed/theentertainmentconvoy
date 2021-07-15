@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostCarousel from '../components/PostCarousel';
 import PostCard from '../components/PostCard';
 import { posts as textPost} from '../api/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginWithGoogle } from '../actions/userActions';
+
 
 const HomePage = () => {
 
   const posts = textPost.filter(post => post.type === 'text')
+  const user = useSelector(state => state.userloginWithGoogle)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(loginWithGoogle())
+  }, [])
+  
 
   return (
     <div className='p-4'>

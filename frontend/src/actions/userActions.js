@@ -40,9 +40,11 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('following')
   localStorage.removeItem('follower')
   dispatch({ type: 'USER_LOGOUT' })
+  dispatch({type: 'USER_LOGOUT_WITH_GOOGLE'})
   dispatch({ type: 'USER_DETAILS_RESET' })
   dispatch({ type: 'USER_LIST_RESET' })
   document.location.href = '/login'
+  window.open("http://localhost:5000/auth/logout", "_self");
 }
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -147,7 +149,10 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     })
 
-    console.log(data)
+    dispatch({
+      type:'USER_DETAILS_RESET'
+    })
+
     dispatch({
       type: 'USER_LOGIN_SUCCESS',
       payload: data,
@@ -302,7 +307,7 @@ export const followUser = (userToFollow) => async (dispatch, getState) => {
 
       dispatch({
       type: 'USER_FOLLOW_SUCCESS',
-      payload: data,
+      payload: data.following,
     })
     
   } catch (error) {
@@ -343,7 +348,7 @@ export const unFollowUser = (userToFollow) => async (dispatch, getState) => {
     
     dispatch({
       type: 'USER_UNFOLLOW_SUCCESS',
-      payload: data,
+      payload: data.following,
     })
   } catch (error) {
     const message =
@@ -397,6 +402,46 @@ export const userFollowList = () => async (dispatch, getState) => {
     dispatch({
       type: 'USER_FOLLOWER_LIST_FAIL',
       payload: message,
+    })
+  }
+}
+
+export const loginWithGoogle = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'USER_LOGIN_WITH_GOOGLE_REQUEST',
+    })
+
+    const config = {
+      headers: {
+        headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true
+      }
+      }
+    }
+
+    const { data } = await axios.get('auth/login/success', config)
+
+      dispatch({
+        type:'USER_LOGIN_WITH_GOOGLE_SUCCESS',
+        payload: data.user
+      })
+      dispatch({
+            type: 'USER_LOGIN_SUCCESS',
+            payload: data,
+          })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+  } catch (error) {
+    dispatch({
+      type: 'USER_LOGIN_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     })
   }
 }
